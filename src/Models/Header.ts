@@ -10,6 +10,6 @@ export class Header implements IRenderable{
     RenderContent(): string {
         return this.renderer.Render(this);
     }
-    public Key: string;
-    public Value: string;
+    public Key: string = '';
+    public Value: string = '';
 }

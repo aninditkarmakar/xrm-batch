@@ -1,7 +1,5 @@
 import { expect } from 'chai';
 import 'mocha';
-import * as TypeMoq from 'typemoq';
-import { Header } from '../../Models/Header';
 import { HeaderRenderer } from '../../Renderer/Renderers';
 import { HeaderCollection } from '../HeaderCollection';
 

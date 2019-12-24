@@ -1,6 +1,6 @@
 export abstract class Exception {
     public Message: string;
-    public InnerException: Exception;
+    public InnerException: Exception | null = null;
 
     constructor(message: string, ex? : Exception) {
         this.Message = message;

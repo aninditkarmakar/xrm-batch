@@ -2,8 +2,9 @@ import { Header } from "../Models/Header";
 import { InvalidParameterException } from "../Exceptions/Exceptions";
 import { IRenderer } from "../Renderer/IRenderer";
 import { IRenderable } from "../Renderer/IRenderable";
+import { ICollection } from "./ICollection";
 
-export class HeaderCollection implements IRenderable {
+export class HeaderCollection implements IRenderable, ICollection<Header, string>{
     RenderContent(): string {
         let rendered = '';
         this.headerObjects.forEach((header, idx) => {
@@ -11,7 +12,7 @@ export class HeaderCollection implements IRenderable {
         });
         return rendered;
     }
-    private headers = {};
+    private headers : {[index: string]:any} = {};
 
     private headerObjects : Header[] = [];
 
@@ -19,6 +20,10 @@ export class HeaderCollection implements IRenderable {
 
     constructor(renderer: IRenderer<Header>) {
         this.headerRenderer = renderer;
+    }
+
+    public get Length() : number {
+        return this.headerObjects.length;
     }
 
     public Add(header: Header) : void;
@@ -65,7 +70,18 @@ export class HeaderCollection implements IRenderable {
         }
     }
 
-    public Get(key: string) : string {
-        return this.headers[key];
+    public Get(key: string) : Header | null {
+        if(Object.keys(this.headers).indexOf(key) >= 0) {
+            let h = new Header(this.headerRenderer);
+            h.Key = key;
+            h.Value = this.headers[key];
+
+            return h;
+        }
+        return null;
+    }
+
+    GetAll(): Header[] {
+        return this.headerObjects;
     }
 }
